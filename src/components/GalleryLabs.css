@@ -835,3 +835,109 @@
     flex: 1 1 auto;
   }
 }
+
+
+/* =========================================
+   RESPONSIVE VIDEO PLAYER FIX
+   ========================================= */
+
+/* Video player should never stretch too tall */
+.gl-video-player,
+.gl-video-container,
+.gl-video-modal video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  max-height: min(65vh, 650px);
+  object-fit: contain;
+}
+
+/* Keep the video area within a predictable height */
+.gl-video-container {
+  height: min(65vh, 650px);
+  min-height: 220px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #05070c;
+}
+
+/* Portrait videos should fit inside the player */
+.gl-video-container video,
+.gl-video-player video,
+.gl-video-modal video {
+  width: 100%;
+  height: 100%;
+  max-height: min(65vh, 650px);
+  object-fit: contain;
+}
+
+/* Video enhancement controls */
+.gl-video-enhancements,
+.gl-enhancement-controls {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.gl-enhancement-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.gl-enhancement-controls > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Tablets and smaller screens */
+@media (max-width: 768px) {
+  .gl-video-container {
+    height: min(58svh, 480px);
+    min-height: 200px;
+  }
+
+  .gl-video-container video,
+  .gl-video-player video,
+  .gl-video-modal video {
+    max-height: min(58svh, 480px);
+  }
+
+  .gl-enhancement-controls {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .gl-video-enhancements {
+    padding: 12px !important;
+  }
+
+  .gl-video-enhancements button {
+    min-height: 42px;
+  }
+
+  .gl-video-enhancements input,
+  .gl-video-enhancements select {
+    max-width: 100%;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+  .gl-video-container {
+    height: min(52svh, 380px);
+    min-height: 180px;
+  }
+
+  .gl-video-container video,
+  .gl-video-player video,
+  .gl-video-modal video {
+    max-height: min(52svh, 380px);
+  }
+
+  .gl-video-enhancements {
+    padding: 10px !important;
+  }
+}
