@@ -1,5 +1,5 @@
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
   Camera,
@@ -11,9 +11,16 @@ import {
   Sparkles,
   ArrowRight,
   RotateCcw,
+  Maximize,
+  Volume2,
+  VolumeX,
+  PictureInPicture2,
+  Gauge,
+  Sun,
 } from "lucide-react";
 import "./GalleryLabs.css";
 
+// Keep the existing image folder and photo gallery.
 const imageModules = import.meta.glob("../assets/my-gallary/*", {
   eager: true,
   query: "?url",
@@ -33,6 +40,7 @@ const imageDetails = {
   "my-img7.jpg": { title: "School Celebrations", category: "Events" },
 };
 
+// Direct Cloudinary MP4 URLs.
 const videoItems = [
   {
     id: "welcome",
@@ -53,7 +61,7 @@ const videoItems = [
     title: "Hanuman Movie Experience",
     description: "A memorable school activity.",
     category: "Activities",
-    src: "https://res.cloudinary.com/trcybfpw/video/upload/v1792739882/savefromins.com_Royal_Heights_Higher_Secondary_School_Zirapur_%E0%A4%95%E0%A5%87_%E0%A4%B5%E0%A4%BF%E0%A4%A6%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%A5%E0%A4%BF%E0%A4%AF%E0%A5%8B%E0%A4%82_%E0%A4%A8%E0%A5%87_%E0%A4%B9%E0%A4%A8%E0%A5%81%E0%A4%AE%E0%A4%BE%E0%A4%A8_%E0%A4%AB%E0%A4%BF%E0%A4%B2%E0%A5%8D%E0%A4%AE_%E0%A4%95%E0%A4%BE_%E0%A4%86%E0%A4%A8%E0%A4%82%E0%A4%A6_%E0%A4%B2%E0%A4%BF%E0%A4%AF%E0%A4%BE___%E0%A4%AE%E0%A4%A8%E0%A5%8B%E0%A4%B0%E0%A4%82%E0%A4%9C%E0%A4%A8_%E0%A4%95%E0%A5%87_%E0%A4%B8%E0%A4%BE%E0%A4%A5_%E0%A4%AD%E0%A4%BE%E0%A4%B0%E0%A4%A4%E0%A5%80%E0%A4%AF_%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A5%83%E0%A4%A4%E0%A4%BF_%E0%A4%B8%E0%A4%BE%E0%A4%B9%E0%A4%B8_%E0%A4%94%E0%A4%B0_%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A4%BE%E0%A4%B0%E0%A5%8B%E0%A4%82_%E0%A4%B8%E0%A5%87_%E0%A4%9C%E0%A5%81%E0%A4%A1%E0%A4%BC%E0%A4%A8%E0%A5%87_%E0%A4%95%E0%A4%BE_%E0%A4%8F%E0%A4%95_%E0%A4%AF%E0%A4%BE%E0%A4%A6%E0%A4%97%E0%A4%BE%E0%A4%B0_%E0%A4%85%E0%A4%A8%E0%A5%81%E0%A4%AD%E0%A4%B5_%EF%B8%8F___%E0%A4%95%E0%A5%81%E0%A4%9B_%E0%A4%AA%E0%A4%B2_%E0%A4%AA%E0%A4%A2.mp4",
+    src: "https://res.cloudinary.com/trcybfpw/video/upload/v1792739882/savefromins.com_Royal_Heights_Higher_Secondary_School_Zirapur_%E0%A4%95%E0%A5%87_%E0%A4%B5%E0%A4%BF%E0%A4%A6%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%A5%E0%A4%BF%E0%A4%AF%E0%A5%8B%E0%A4%82_%E0%A4%A8%E0%A5%87_%E0%A4%B9%E0%A4%A8%E0%A5%81%E0%A4%AE%E0%A4%BE%E0%A4%A8_%E0%A4%AB%E0%A4%BF%E0%A4%B2%E0%A5%8D%E0%A4%AE_%E0%A4%95%E0%A4%BE_%E0%A4%86%E0%A4%A8%E0%A4%82%E0%A4%A6_%E0%A4%B2%E0%A4%BF%E0%A4%AF%E0%A4%BE___%E0%A4%AE%E0%A4%A8%E0%A5%8B%E0%A4%B0%E0%A4%82%E0%A4%9C%E0%A4%A8_%E0%A4%95%E0%A5%87_%E0%A4%B8%E0%A4%BE%E0%A4%A5_%E0%A4%AD%E0%A4%BE%E0%A4%B0%E0%A4%A4%E0%A5%80%E0%A4%AF_%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A4%B8%E0%A4%BE%E0%A4%B9%E0%A4%B8_%E0%A4%94%E0%A4%B0_%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A4%BE%E0%A4%B0%E0%A5%8B%E0%A4%82_%E0%A4%B8%E0%A5%87_%E0%A4%9C%E0%A5%81%E0%A4%A1%E0%A4%BC%E0%A4%A8%E0%A5%87_%E0%A4%95%E0%A4%BE_%E0%A4%8F%E0%A4%95_%E0%A4%AF%E0%A4%BE%E0%A4%A6%E0%A4%97%E0%A4%BE%E0%A4%B0_%E0%A4%85%E0%A4%A8%E0%A5%81%E0%A4%AD%E0%A4%B5_%EF%B8%8F___%E0%A4%95%E0%A5%81%E0%A4%9B_%E0%A4%AA%E0%A4%B2_%E0%A4%AA%E0%A4%A2.mp4",
   },
   {
     id: "school-life",
@@ -110,25 +118,27 @@ function PhotoGallery() {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [failedPhotos, setFailedPhotos] = useState([]);
 
-  const photos = useMemo(() => {
-    return Object.entries(imageModules)
-      .filter(([path]) => /\.(jpe?g|png|webp|avif|gif)$/i.test(path))
-      .map(([path, src]) => {
-        const filename = getFilename(path);
-        const details = imageDetails[filename];
+  const photos = useMemo(
+    () =>
+      Object.entries(imageModules)
+        .filter(([path]) => /\.(jpe?g|png|webp|avif|gif)$/i.test(path))
+        .map(([path, src]) => {
+          const filename = getFilename(path);
+          const details = imageDetails[filename];
 
-        return {
-          id: path,
-          filename,
-          src,
-          title: details?.title || getTitle(filename),
-          category: details?.category || getCategory(filename),
-        };
-      })
-      .sort((a, b) =>
-        a.filename.localeCompare(b.filename, undefined, { numeric: true })
-      );
-  }, []);
+          return {
+            id: path,
+            filename,
+            src,
+            title: details?.title || getTitle(filename),
+            category: details?.category || getCategory(filename),
+          };
+        })
+        .sort((a, b) =>
+          a.filename.localeCompare(b.filename, undefined, { numeric: true })
+        ),
+    []
+  );
 
   const categories = [
     "All Photos",
@@ -249,7 +259,9 @@ function PhotoGallery() {
                     <span className="gl-photo-index">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="gl-photo-category">{photo.category}</span>
+                    <span className="gl-photo-category">
+                      {photo.category}
+                    </span>
                     <span className="gl-photo-zoom">
                       <Camera size={18} />
                     </span>
@@ -369,13 +381,23 @@ function VideoGallery() {
   const [failedVideos, setFailedVideos] = useState([]);
   const [playerError, setPlayerError] = useState(false);
   const [retryKey, setRetryKey] = useState(0);
+  const [speed, setSpeed] = useState(1);
+  const [volume, setVolume] = useState(1);
+  const [brightness, setBrightness] = useState(100);
+  const [muted, setMuted] = useState(false);
+  const [showEnhancements, setShowEnhancements] = useState(true);
+  const playerRef = useRef(null);
 
   useBodyScrollLock(Boolean(activeVideo));
 
   function openVideo(video) {
+    setActiveVideo(video);
     setPlayerError(false);
     setRetryKey(0);
-    setActiveVideo(video);
+    setSpeed(1);
+    setVolume(1);
+    setBrightness(100);
+    setMuted(false);
   }
 
   function closeVideo() {
@@ -388,16 +410,87 @@ function VideoGallery() {
     setRetryKey((key) => key + 1);
   }
 
+  function changeSpeed(value) {
+    setSpeed(value);
+    if (playerRef.current) playerRef.current.playbackRate = value;
+  }
+
+  function changeVolume(value) {
+    setVolume(value);
+    setMuted(value === 0);
+
+    if (playerRef.current) {
+      playerRef.current.volume = value;
+      playerRef.current.muted = value === 0;
+    }
+  }
+
+  async function toggleFullscreen() {
+    const player = playerRef.current;
+    if (!player) return;
+
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      } else if (player.requestFullscreen) {
+        await player.requestFullscreen();
+      } else if (player.webkitEnterFullscreen) {
+        player.webkitEnterFullscreen();
+      }
+    } catch {
+      // Native video controls remain available.
+    }
+  }
+
+  async function togglePictureInPicture() {
+    const player = playerRef.current;
+    if (!player || !document.pictureInPictureEnabled) return;
+
+    try {
+      if (document.pictureInPictureElement) {
+        await document.exitPictureInPicture();
+      } else {
+        await player.requestPictureInPicture();
+      }
+    } catch {
+      // Some browsers do not support Picture-in-Picture.
+    }
+  }
+
+  function resetEnhancements() {
+    setSpeed(1);
+    setVolume(1);
+    setBrightness(100);
+    setMuted(false);
+
+    if (playerRef.current) {
+      playerRef.current.playbackRate = 1;
+      playerRef.current.volume = 1;
+      playerRef.current.muted = false;
+    }
+  }
+
   useEffect(() => {
     if (!activeVideo) return undefined;
 
     function onKeyDown(event) {
-      if (event.key === "Escape") closeVideo();
+      if (event.key === "Escape" && !document.fullscreenElement) {
+        closeVideo();
+      }
     }
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [activeVideo]);
+
+  useEffect(() => {
+    const player = playerRef.current;
+    if (!player) return;
+
+    player.playbackRate = speed;
+    player.volume = volume;
+    player.muted = muted;
+  }, [activeVideo, retryKey, speed, volume, muted]);
 
   return (
     <div className="gl-video-area">
@@ -413,66 +506,61 @@ function VideoGallery() {
       </div>
 
       <div className="gl-video-grid">
-        {videoItems.map((video, index) => {
-          const failed = failedVideos.includes(video.id);
-
-          return (
-            <article className="gl-video-card" key={video.id}>
-              <button
-                type="button"
-                className="gl-video-open"
-                onClick={() => openVideo(video)}
-                aria-label={`Watch ${video.title}`}
-              >
-                <div className="gl-video-cover">
-                  {!failed ? (
-                    <video
-                      src={video.src}
-                      preload="metadata"
-                      muted
-                      playsInline
-                      aria-label={`${video.title} preview`}
-                      onLoadedMetadata={() => {
-                        setFailedVideos((current) =>
-                          current.filter((id) => id !== video.id)
-                        );
-                      }}
-                      onError={() => {
-                        setFailedVideos((current) =>
-                          current.includes(video.id)
-                            ? current
-                            : [...current, video.id]
-                        );
-                      }}
-                    />
-                  ) : (
-                    <div className="gl-video-fallback">
-                      <Video size={28} />
-                      <span>Preview unavailable · click to try</span>
-                    </div>
-                  )}
-
-                  <span className="gl-video-play">
-                    <Play size={20} fill="currentColor" />
-                  </span>
-
-                  <span className="gl-video-number">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                </div>
-
-                <div className="gl-video-caption">
-                  <span>{video.category}</span>
-                  <h4>{video.title}</h4>
-                  <p>{video.description}</p>
-                  <div className="gl-video-link">
-                    Watch video <ArrowRight size={16} />
+        {videoItems.map((video, index) => (
+          <article className="gl-video-card" key={video.id}>
+            <button
+              type="button"
+              className="gl-video-open"
+              onClick={() => openVideo(video)}
+              aria-label={`Watch ${video.title}`}
+            >
+              <div className="gl-video-cover">
+                {!failedVideos.includes(video.id) ? (
+                  <video
+                    src={video.src}
+                    preload="metadata"
+                    muted
+                    playsInline
+                    aria-label={`${video.title} preview`}
+                    onLoadedMetadata={() =>
+                      setFailedVideos((current) =>
+                        current.filter((id) => id !== video.id)
+                      )
+                    }
+                    onError={() =>
+                      setFailedVideos((current) =>
+                        current.includes(video.id)
+                          ? current
+                          : [...current, video.id]
+                      )
+                    }
+                  />
+                ) : (
+                  <div className="gl-video-fallback">
+                    <Video size={28} />
+                    <span>Preview unavailable · click to try</span>
                   </div>
+                )}
+
+                <span className="gl-video-play">
+                  <Play size={20} fill="currentColor" />
+                </span>
+                <span className="gl-video-number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
+
+              <div className="gl-video-caption">
+                <span>{video.category}</span>
+                <h4>{video.title}</h4>
+                <p>{video.description}</p>
+                <div className="gl-video-link">
+                  Watch video <ArrowRight size={16} />
                 </div>
-              </button>
-            </article>
-          );
-        })}
+              </div>
+            </button>
+          </article>
+        ))}
       </div>
 
       <AnimatePresence>
@@ -508,12 +596,15 @@ function VideoGallery() {
               <div className="gl-player">
                 {!playerError ? (
                   <video
+                    ref={playerRef}
                     key={`${activeVideo.id}-${retryKey}`}
                     src={activeVideo.src}
                     controls
                     autoPlay
                     playsInline
                     preload="metadata"
+                    muted={muted}
+                    style={{ filter: `brightness(${brightness}%)` }}
                     onError={() => setPlayerError(true)}
                   >
                     Your browser does not support HTML video.
@@ -535,6 +626,122 @@ function VideoGallery() {
                   </div>
                 )}
               </div>
+
+              {!playerError && (
+                <div className="gl-video-enhancements">
+                  <button
+                    type="button"
+                    className="gl-enhancement-toggle"
+                    onClick={() =>
+                      setShowEnhancements((current) => !current)
+                    }
+                    aria-expanded={showEnhancements}
+                  >
+                    <Sparkles size={17} />
+                    Video enhancements
+                    <span>{showEnhancements ? "−" : "+"}</span>
+                  </button>
+
+                  {showEnhancements && (
+                    <div className="gl-enhancement-controls">
+                      <label>
+                        <span>
+                          <Gauge size={16} /> Playback speed
+                        </span>
+                        <select
+                          value={speed}
+                          onChange={(event) =>
+                            changeSpeed(Number(event.target.value))
+                          }
+                        >
+                          {[0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map(
+                            (value) => (
+                              <option key={value} value={value}>
+                                {value === 1 ? "Normal (1×)" : `${value}×`}
+                              </option>
+                            )
+                          )}
+                        </select>
+                      </label>
+
+                      <label>
+                        <span>
+                          <Volume2 size={16} /> Volume:{" "}
+                          {Math.round(volume * 100)}%
+                        </span>
+                        <input
+                          type="range"
+                          min="0"
+                          max="1"
+                          step="0.05"
+                          value={volume}
+                          onChange={(event) =>
+                            changeVolume(Number(event.target.value))
+                          }
+                        />
+                      </label>
+
+                      <label>
+                        <span>
+                          <Sun size={16} /> Brightness: {brightness}%
+                        </span>
+                        <input
+                          type="range"
+                          min="70"
+                          max="130"
+                          step="5"
+                          value={brightness}
+                          onChange={(event) =>
+                            setBrightness(Number(event.target.value))
+                          }
+                        />
+                      </label>
+
+                      <div className="gl-enhancement-buttons">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const next = !muted;
+                            setMuted(next);
+                            if (playerRef.current) {
+                              playerRef.current.muted = next;
+                            }
+                          }}
+                        >
+                          {muted ? (
+                            <VolumeX size={16} />
+                          ) : (
+                            <Volume2 size={16} />
+                          )}
+                          {muted ? "Unmute" : "Mute"}
+                        </button>
+
+                        <button type="button" onClick={toggleFullscreen}>
+                          <Maximize size={16} /> Fullscreen
+                        </button>
+
+                        {document.pictureInPictureEnabled && (
+                          <button
+                            type="button"
+                            onClick={togglePictureInPicture}
+                          >
+                            <PictureInPicture2 size={16} /> PiP
+                          </button>
+                        )}
+
+                        <button type="button" onClick={resetEnhancements}>
+                          <RotateCcw size={16} /> Reset
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  <small className="gl-enhancement-note">
+                    Playback controls adjust how the video is viewed. They
+                    do not increase the original video resolution.
+                  </small>
+                </div>
+              )}
 
               <div className="gl-lightbox-footer">
                 <span>{activeVideo.description}</span>
