@@ -1,0 +1,449 @@
+
+/* ==========================================
+   ROYAL HEIGHTS — PREMIUM LOADING SCREEN
+   Compact logo | Elegant | Responsive
+========================================== */
+
+.website-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  padding: 24px 16px;
+  overflow: hidden;
+  isolation: isolate;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 42%,
+      rgba(35, 66, 113, 0.26) 0%,
+      transparent 52%
+    ),
+    linear-gradient(
+      135deg,
+      #07101f 0%,
+      #0b1830 50%,
+      #060d19 100%
+    );
+
+  color: #ffffff;
+  font-family: inherit;
+}
+
+/* Subtle ambient lights */
+
+.loader-glow {
+  position: absolute;
+  z-index: -1;
+
+  width: 220px;
+  height: 220px;
+
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(100px);
+  opacity: 0.14;
+
+  animation: loader-glow-drift 8s ease-in-out infinite alternate;
+}
+
+.loader-glow-one {
+  top: 12%;
+  left: 10%;
+  background: #386dcc;
+}
+
+.loader-glow-two {
+  right: 8%;
+  bottom: 8%;
+  background: #c79a48;
+  animation-delay: -4s;
+}
+
+/* Main content */
+
+.loader-content {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: min(100%, 520px);
+  text-align: center;
+}
+
+/* ==========================================
+   COMPACT SCHOOL LOGO
+========================================== */
+
+.loader-emblem {
+  position: relative;
+
+  width: 112px;
+  padding: 0;
+  margin: 0 0 27px;
+
+  box-sizing: border-box;
+  border: 1px solid rgba(225, 190, 112, 0.65);
+  border-radius: 15px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 4px rgba(225, 190, 112, 0.035),
+    0 8px 30px rgba(0, 0, 0, 0.2),
+    0 0 24px rgba(225, 190, 112, 0.08);
+}
+
+/* Image wrapper */
+
+.loader-emblem-inner {
+  width: 100%;
+  overflow: hidden;
+
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+/* Keep the original logo proportions */
+
+.loader-school-logo {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+  object-position: center;
+
+  background: #ffffff;
+}
+
+/* Hide the decorative star for a cleaner logo */
+
+.loader-emblem-star {
+  display: none;
+}
+
+/* ==========================================
+   WELCOME LABEL
+========================================== */
+
+.loader-overline {
+  margin: 0 0 12px;
+
+  color: #d8b56b;
+
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.6;
+
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+/* ==========================================
+   MAIN SCHOOL NAME
+========================================== */
+
+.loader-school-name {
+  margin: 0;
+
+  color: #fff0cc;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 4.2vw, 44px);
+  font-weight: 700;
+  line-height: 1.12;
+
+  letter-spacing: 0.025em;
+
+  text-shadow:
+    0 2px 20px rgba(232, 195, 112, 0.08);
+}
+
+/* Subtitle */
+
+.loader-school-subtitle {
+  margin: 12px 0 0;
+
+  color: #b8c5d9;
+
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.8;
+
+  letter-spacing: 0.2em;
+}
+
+/* ==========================================
+   MINIMAL GOLD ACCENT
+========================================== */
+
+.loader-divider {
+  width: 48px;
+  height: 2px;
+
+  margin: 25px 0 17px;
+
+  transform-origin: center;
+  border-radius: 2px;
+
+  background: linear-gradient(
+    90deg,
+    #9f7737,
+    #f5d995,
+    #9f7737
+  );
+
+  box-shadow: 0 0 12px rgba(232, 195, 112, 0.12);
+}
+
+/* Tagline */
+
+.loader-tagline {
+  margin: 0;
+
+  color: #aebbd0;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 400;
+
+  line-height: 1.6;
+  letter-spacing: 0.015em;
+}
+
+/* ==========================================
+   PROGRESS BAR
+========================================== */
+
+.loader-progress-track {
+  width: 190px;
+  max-width: 65%;
+  height: 2px;
+
+  margin-top: 32px;
+
+  overflow: hidden;
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.13);
+}
+
+.loader-progress-fill {
+  width: 0;
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: linear-gradient(
+    90deg,
+    #b38a43,
+    #ffe5a0,
+    #c79a48
+  );
+
+  box-shadow: 0 0 10px rgba(232, 195, 112, 0.3);
+}
+
+/* Loading status */
+
+.loader-status {
+  margin: 13px 0 0;
+
+  color: #8191aa;
+
+  font-size: 10px;
+  font-weight: 400;
+
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+}
+
+.loader-dots {
+  display: inline-block;
+  width: 18px;
+  text-align: left;
+}
+
+/* Bottom accent */
+
+.loader-bottom-line {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(199, 154, 72, 0.8),
+    rgba(255, 230, 160, 0.9),
+    rgba(199, 154, 72, 0.8),
+    transparent
+  );
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+@keyframes loader-glow-drift {
+  from {
+    transform: translate3d(-8px, -6px, 0) scale(0.94);
+  }
+
+  to {
+    transform: translate3d(10px, 8px, 0) scale(1.06);
+  }
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 768px) {
+  .loader-school-name {
+    font-size: clamp(28px, 5.5vw, 38px);
+  }
+
+  .loader-emblem {
+    width: 104px;
+    margin-bottom: 24px;
+  }
+
+  .loader-school-subtitle {
+    letter-spacing: 0.15em;
+  }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+  .website-loader {
+    padding: 20px 14px;
+  }
+
+  .loader-emblem {
+    width: 92px;
+    margin-bottom: 22px;
+    border-radius: 12px;
+  }
+
+  .loader-emblem-inner {
+    border-radius: 11px;
+  }
+
+  .loader-overline {
+    margin-bottom: 10px;
+    font-size: 9px;
+    letter-spacing: 0.27em;
+  }
+
+  .loader-school-name {
+    font-size: clamp(25px, 7.5vw, 34px);
+    letter-spacing: 0.005em;
+  }
+
+  .loader-school-subtitle {
+    margin-top: 9px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+
+  .loader-divider {
+    width: 42px;
+    margin: 21px 0 14px;
+  }
+
+  .loader-tagline {
+    font-size: 14px;
+  }
+
+  .loader-progress-track {
+    width: 165px;
+    margin-top: 27px;
+  }
+
+  .loader-status {
+    font-size: 10px;
+  }
+}
+
+/* Extra-small phones */
+
+@media (max-width: 360px) {
+  .loader-emblem {
+    width: 82px;
+    margin-bottom: 19px;
+  }
+
+  .loader-school-name {
+    font-size: 25px;
+  }
+
+  .loader-school-subtitle {
+    font-size: 8px;
+    letter-spacing: 0.09em;
+  }
+
+  .loader-tagline {
+    font-size: 13px;
+  }
+}
+
+/* Short screens */
+
+@media (max-height: 650px) {
+  .website-loader {
+    overflow-y: auto;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .loader-emblem {
+    width: 78px;
+    margin-bottom: 14px;
+  }
+
+  .loader-overline {
+    margin-bottom: 7px;
+  }
+
+  .loader-school-subtitle {
+    margin-top: 7px;
+  }
+
+  .loader-divider {
+    margin: 15px 0 10px;
+  }
+
+  .loader-progress-track {
+    margin-top: 20px;
+  }
+
+  .loader-status {
+    margin-top: 9px;
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-glow {
+    animation: none;
+  }
+}
