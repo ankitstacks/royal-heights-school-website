@@ -10,10 +10,10 @@ import {
   Video,
   Sparkles,
   ArrowRight,
+  RotateCcw,
 } from "lucide-react";
 import "./GalleryLabs.css";
 
-// IMPORTANT: This path matches your renamed folder exactly.
 const imageModules = import.meta.glob("../assets/my-gallary/*", {
   eager: true,
   query: "?url",
@@ -21,34 +21,16 @@ const imageModules = import.meta.glob("../assets/my-gallary/*", {
 });
 
 const imageDetails = {
-  "my-img.jpg": {
-    title: "Our School Campus",
-    category: "Campus",
-  },
-  "my-img2.jpg": {
-    title: "School Grounds",
-    category: "Campus",
-  },
-  "my-img3.jpg": {
-    title: "Our School Community",
-    category: "Events",
-  },
-  "my-img4.webp": {
-    title: "Students Together",
-    category: "Events",
-  },
+  "my-img.jpg": { title: "Our School Campus", category: "Campus" },
+  "my-img2.jpg": { title: "School Grounds", category: "Campus" },
+  "my-img3.jpg": { title: "Our School Community", category: "Events" },
+  "my-img4.webp": { title: "Students Together", category: "Events" },
   "my-img5.jpg": {
     title: "Royal Heights School Building",
     category: "Campus",
   },
-  "my-img6.webp": {
-    title: "Classroom Activities",
-    category: "Classrooms",
-  },
-  "my-img7.jpg": {
-    title: "School Celebrations",
-    category: "Events",
-  },
+  "my-img6.webp": { title: "Classroom Activities", category: "Classrooms" },
+  "my-img7.jpg": { title: "School Celebrations", category: "Events" },
 };
 
 const videoItems = [
@@ -57,35 +39,35 @@ const videoItems = [
     title: "Welcome to Royal Heights",
     description: "Discover our school and learning environment.",
     category: "School Life",
-    src: "/gallery/welcome-school.mp4",
+    src: "https://res.cloudinary.com/trcybfpw/video/upload/v1792739071/savefromins.com_Royal_Heights_Higher_Secondary_School_Zirapur____Shaping_Young_Minds_Building_Bright_Futures__Where_knowledge_meets_creativity_values_inspire_excellence_and_every_student_gets_the_opp.mp4",
   },
   {
     id: "navdurga",
     title: "Navdurga Celebration",
     description: "A memorable celebration of culture and tradition.",
     category: "Cultural Events",
-    src: "/gallery/navdurga-celebration.mp4",
+    src: "https://res.cloudinary.com/trcybfpw/video/upload/v1792739165/savefromins.com_%E0%A4%A8%E0%A4%B5%E0%A4%A6%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%97%E0%A4%BE_%E0%A4%95%E0%A5%87_%E0%A4%A8%E0%A5%8C_%E0%A4%B0%E0%A5%82%E0%A4%AA_%E0%A4%B6%E0%A4%95%E0%A5%8D%E0%A4%A4%E0%A4%BF_%E0%A4%94%E0%A4%B0_%E0%A4%AD%E0%A4%95%E0%A5%8D%E0%A4%A4%E0%A4%BF_%E0%A4%95%E0%A4%BE_%E0%A4%85%E0%A4%A8%E0%A4%AE%E0%A5%8B%E0%A4%B2_%E0%A4%B8%E0%A4%82%E0%A4%97%E0%A4%AE___%E0%A4%B0%E0%A5%89%E0%A4%AF%E0%A4%B2_%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A5%82%E0%A4%B2_%E0%A4%95%E0%A5%87_%E0%A4%A8%E0%A4%A8%E0%A5%8D%E0%A4%B9%E0%A5%87_%E0%A4%B8%E0%A4%BF%E0%A4%A4%E0%A4%BE%E0%A4%B0%E0%A5%8B%E0%A4%82_%E0%A4%A6%E0%A5%8D%E0%A4%B5%E0%A4%BE%E0%A4%B0%E0%A4%BE_%E0%A4%AE%E0%A4%BE%E0%A4%81_%E0%A4%A6%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%97%E0%A4%BE_%E0%A4%95%E0%A5%87_%E0%A4%A8%E0%A5%8C_%E0%A4%A6%E0%A4%BF%E0%A4%B5%E0%A5%8D%E0%A4%AF_%E0%A4%B8%E0%A5%8D%E0%A4%B5%E0%A4%B0%E0%A5%82%E0%A4%AA%E0%A5%8B%E0%A4%82_%E0%A4%95%E0%A5%80_%E0%A4%AE%E0%A4%A8%E0%A4%AE%E0%A5%8B%E0%A4%B9%E0%A4%95_%E0%A4%AA%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%81%E0%A4%A4%E0%A4%BF_%EF%B8%8F___%E0%A4%AE%E0%A4%BE%E0%A4%81_%E0%A4%A6%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%97%E0%A4%BE_%E0%A4%B8%E0%A4%AD%E0%A5%80_%E0%A4%AA%E0%A4%B0_%E0%A4%85%E0%A4%AA%E0%A4%A8%E0%A5%80_%E0%A4%95%E0%A5%83%E0%A4%AA%E0%A4%BE_%E0%A4%AC%E0%A4%A8%E0%A4%BE%E0%A4%8F_%E0%A4%B0%E0%A4%96%E0%A5%87%E0%A4%82_%E0%A4%94%E0%A4%B0_%E0%A4%9C.mp4",
   },
   {
     id: "hanuman",
     title: "Hanuman Movie Experience",
     description: "A memorable school activity.",
     category: "Activities",
-    src: "/gallery/hanuman-movie.mp4",
+    src: "https://res.cloudinary.com/trcybfpw/video/upload/v1792739882/savefromins.com_Royal_Heights_Higher_Secondary_School_Zirapur_%E0%A4%95%E0%A5%87_%E0%A4%B5%E0%A4%BF%E0%A4%A6%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%A5%E0%A4%BF%E0%A4%AF%E0%A5%8B%E0%A4%82_%E0%A4%A8%E0%A5%87_%E0%A4%B9%E0%A4%A8%E0%A5%81%E0%A4%AE%E0%A4%BE%E0%A4%A8_%E0%A4%AB%E0%A4%BF%E0%A4%B2%E0%A5%8D%E0%A4%AE_%E0%A4%95%E0%A4%BE_%E0%A4%86%E0%A4%A8%E0%A4%82%E0%A4%A6_%E0%A4%B2%E0%A4%BF%E0%A4%AF%E0%A4%BE___%E0%A4%AE%E0%A4%A8%E0%A5%8B%E0%A4%B0%E0%A4%82%E0%A4%9C%E0%A4%A8_%E0%A4%95%E0%A5%87_%E0%A4%B8%E0%A4%BE%E0%A4%A5_%E0%A4%AD%E0%A4%BE%E0%A4%B0%E0%A4%A4%E0%A5%80%E0%A4%AF_%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A5%83%E0%A4%A4%E0%A4%BF_%E0%A4%B8%E0%A4%BE%E0%A4%B9%E0%A4%B8_%E0%A4%94%E0%A4%B0_%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A4%BE%E0%A4%B0%E0%A5%8B%E0%A4%82_%E0%A4%B8%E0%A5%87_%E0%A4%9C%E0%A5%81%E0%A4%A1%E0%A4%BC%E0%A4%A8%E0%A5%87_%E0%A4%95%E0%A4%BE_%E0%A4%8F%E0%A4%95_%E0%A4%AF%E0%A4%BE%E0%A4%A6%E0%A4%97%E0%A4%BE%E0%A4%B0_%E0%A4%85%E0%A4%A8%E0%A5%81%E0%A4%AD%E0%A4%B5_%EF%B8%8F___%E0%A4%95%E0%A5%81%E0%A4%9B_%E0%A4%AA%E0%A4%B2_%E0%A4%AA%E0%A4%A2.mp4",
   },
   {
     id: "school-life",
     title: "A Day at Royal Heights",
     description: "A glimpse into everyday school life.",
     category: "School Life",
-    src: "/gallery/school-life.mp4",
+    src: "https://res.cloudinary.com/trcybfpw/video/upload/v1792739240/savefromins.com_Exam_Day_at_Royal_Heights__Focused_minds_confident_smiles_a_step_closer_to_success.__Every_exam_is_an_opportunity_to_learn_grow_and_shine____RoyalHeights_ExamDay_SchoolLife_Stude.mp4",
   },
   {
     id: "investiture",
     title: "Investiture Ceremony",
     description: "Celebrating leadership and responsibility.",
     category: "Cultural Events",
-    src: "/gallery/investiture-ceremony.mp4",
+    src: "https://res.cloudinary.com/trcybfpw/video/upload/v1792739727/savefromins.com_A_proud_moment_of_leadership_responsibility_and_new_beginnings_%EF%B8%8F___The_Investiture_Ceremony_at_Royal_Heights_Higher_Secondary_School_celebrated_our_young_leaders_as_they_stepped_forward_to_le.mp4",
   },
 ];
 
@@ -95,7 +77,6 @@ function getFilename(path) {
 
 function getCategory(filename) {
   const name = filename.toLowerCase();
-
   if (/science|lab/.test(name)) return "Science Labs";
   if (/computer|digital|technology/.test(name)) return "Computer Lab";
   if (/sport|game|ground/.test(name)) return "Sports";
@@ -144,9 +125,9 @@ function PhotoGallery() {
           category: details?.category || getCategory(filename),
         };
       })
-      .sort((a, b) => a.filename.localeCompare(b.filename, undefined, {
-        numeric: true,
-      }));
+      .sort((a, b) =>
+        a.filename.localeCompare(b.filename, undefined, { numeric: true })
+      );
   }, []);
 
   const categories = [
@@ -174,15 +155,18 @@ function PhotoGallery() {
       if (event.key === "Escape") setSelectedPhoto(null);
 
       if (event.key === "ArrowRight" && filteredPhotos.length) {
-        const next = (selectedIndex + 1) % filteredPhotos.length;
-        setSelectedPhoto(filteredPhotos[next]);
+        setSelectedPhoto(
+          filteredPhotos[(selectedIndex + 1) % filteredPhotos.length]
+        );
       }
 
       if (event.key === "ArrowLeft" && filteredPhotos.length) {
-        const previous =
-          (selectedIndex - 1 + filteredPhotos.length) %
-          filteredPhotos.length;
-        setSelectedPhoto(filteredPhotos[previous]);
+        setSelectedPhoto(
+          filteredPhotos[
+            (selectedIndex - 1 + filteredPhotos.length) %
+              filteredPhotos.length
+          ]
+        );
       }
     }
 
@@ -261,17 +245,11 @@ function PhotoGallery() {
                         )
                       }
                     />
-
                     <div className="gl-photo-overlay" />
-
                     <span className="gl-photo-index">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-
-                    <span className="gl-photo-category">
-                      {photo.category}
-                    </span>
-
+                    <span className="gl-photo-category">{photo.category}</span>
                     <span className="gl-photo-zoom">
                       <Camera size={18} />
                     </span>
@@ -389,14 +367,32 @@ function PhotoGallery() {
 function VideoGallery() {
   const [activeVideo, setActiveVideo] = useState(null);
   const [failedVideos, setFailedVideos] = useState([]);
+  const [playerError, setPlayerError] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
 
   useBodyScrollLock(Boolean(activeVideo));
+
+  function openVideo(video) {
+    setPlayerError(false);
+    setRetryKey(0);
+    setActiveVideo(video);
+  }
+
+  function closeVideo() {
+    setActiveVideo(null);
+    setPlayerError(false);
+  }
+
+  function retryVideo() {
+    setPlayerError(false);
+    setRetryKey((key) => key + 1);
+  }
 
   useEffect(() => {
     if (!activeVideo) return undefined;
 
     function onKeyDown(event) {
-      if (event.key === "Escape") setActiveVideo(null);
+      if (event.key === "Escape") closeVideo();
     }
 
     window.addEventListener("keydown", onKeyDown);
@@ -417,56 +413,66 @@ function VideoGallery() {
       </div>
 
       <div className="gl-video-grid">
-        {videoItems.map((video, index) => (
-          <article className="gl-video-card" key={video.id}>
-            <button
-              type="button"
-              className="gl-video-open"
-              onClick={() => setActiveVideo(video)}
-              disabled={failedVideos.includes(video.id)}
-            >
-              <div className="gl-video-cover">
-                {!failedVideos.includes(video.id) ? (
-                  <video
-                    src={video.src}
-                    preload="metadata"
-                    muted
-                    playsInline
-                    onError={() =>
-                      setFailedVideos((current) =>
-                        current.includes(video.id)
-                          ? current
-                          : [...current, video.id]
-                      )
-                    }
-                  />
-                ) : (
-                  <div className="gl-video-fallback">
-                    <Video size={28} />
-                    <span>Video file unavailable</span>
-                  </div>
-                )}
+        {videoItems.map((video, index) => {
+          const failed = failedVideos.includes(video.id);
 
-                <span className="gl-video-play">
-                  <Play size={20} fill="currentColor" />
-                </span>
+          return (
+            <article className="gl-video-card" key={video.id}>
+              <button
+                type="button"
+                className="gl-video-open"
+                onClick={() => openVideo(video)}
+                aria-label={`Watch ${video.title}`}
+              >
+                <div className="gl-video-cover">
+                  {!failed ? (
+                    <video
+                      src={video.src}
+                      preload="metadata"
+                      muted
+                      playsInline
+                      aria-label={`${video.title} preview`}
+                      onLoadedMetadata={() => {
+                        setFailedVideos((current) =>
+                          current.filter((id) => id !== video.id)
+                        );
+                      }}
+                      onError={() => {
+                        setFailedVideos((current) =>
+                          current.includes(video.id)
+                            ? current
+                            : [...current, video.id]
+                        );
+                      }}
+                    />
+                  ) : (
+                    <div className="gl-video-fallback">
+                      <Video size={28} />
+                      <span>Preview unavailable · click to try</span>
+                    </div>
+                  )}
 
-                <span className="gl-video-number">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-              </div>
+                  <span className="gl-video-play">
+                    <Play size={20} fill="currentColor" />
+                  </span>
 
-              <div className="gl-video-caption">
-                <span>{video.category}</span>
-                <h4>{video.title}</h4>
-                <p>{video.description}</p>
-                <div className="gl-video-link">
-                  Watch video <ArrowRight size={16} />
+                  <span className="gl-video-number">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                 </div>
-              </div>
-            </button>
-          </article>
-        ))}
+
+                <div className="gl-video-caption">
+                  <span>{video.category}</span>
+                  <h4>{video.title}</h4>
+                  <p>{video.description}</p>
+                  <div className="gl-video-link">
+                    Watch video <ArrowRight size={16} />
+                  </div>
+                </div>
+              </button>
+            </article>
+          );
+        })}
       </div>
 
       <AnimatePresence>
@@ -476,12 +482,13 @@ function VideoGallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setActiveVideo(null)}
+            onClick={closeVideo}
           >
             <div
               className="gl-lightbox-panel gl-video-player-panel"
               role="dialog"
               aria-modal="true"
+              aria-label={activeVideo.title}
               onClick={(event) => event.stopPropagation()}
             >
               <div className="gl-lightbox-header">
@@ -491,7 +498,7 @@ function VideoGallery() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setActiveVideo(null)}
+                  onClick={closeVideo}
                   aria-label="Close video"
                 >
                   <X size={24} />
@@ -499,14 +506,34 @@ function VideoGallery() {
               </div>
 
               <div className="gl-player">
-                <video
-                  key={activeVideo.id}
-                  src={activeVideo.src}
-                  controls
-                  autoPlay
-                  playsInline
-                  preload="auto"
-                />
+                {!playerError ? (
+                  <video
+                    key={`${activeVideo.id}-${retryKey}`}
+                    src={activeVideo.src}
+                    controls
+                    autoPlay
+                    playsInline
+                    preload="metadata"
+                    onError={() => setPlayerError(true)}
+                  >
+                    Your browser does not support HTML video.
+                  </video>
+                ) : (
+                  <div className="gl-video-fallback" role="alert">
+                    <Video size={32} />
+                    <span>Video could not be played.</span>
+                    <button type="button" onClick={retryVideo}>
+                      <RotateCcw size={16} /> Try again
+                    </button>
+                    <a
+                      href={activeVideo.src}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Open video directly
+                    </a>
+                  </div>
+                )}
               </div>
 
               <div className="gl-lightbox-footer">
