@@ -999,3 +999,123 @@
     object-fit: contain;
   }
 }
+
+
+/* ==========================================
+   ROYAL HEIGHTS - RESPONSIVE VIDEO MODAL
+   ========================================== */
+
+.gl-lightbox-panel.gl-video-player-panel {
+  width: min(900px, calc(100% - 32px));
+  max-width: 900px;
+  max-height: 92vh;
+  max-height: 92dvh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.gl-video-player-panel .gl-lightbox-header {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.gl-video-player-panel .gl-lightbox-header h3 {
+  overflow-wrap: anywhere;
+}
+
+/* Video area: do not force portrait videos to landscape */
+.gl-video-player-panel .gl-player {
+  flex: 0 1 auto;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  max-height: 58dvh;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #05070c;
+}
+
+.gl-video-player-panel .gl-player video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 58dvh;
+  object-fit: contain;
+  background: #05070c;
+}
+
+/* Footer stays within the modal */
+.gl-video-player-panel .gl-lightbox-footer {
+  flex: 0 0 auto;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  overflow-wrap: anywhere;
+}
+
+/* Tablet and mobile */
+@media (max-width: 768px) {
+  .gl-lightbox-panel.gl-video-player-panel {
+    width: calc(100% - 24px);
+    max-width: 600px;
+    max-height: 92dvh;
+    margin: auto;
+  }
+
+  .gl-video-player-panel .gl-player,
+  .gl-video-player-panel .gl-player video {
+    max-height: 42dvh;
+  }
+}
+
+/* Narrow phones */
+@media (max-width: 480px) {
+  .gl-lightbox-panel.gl-video-player-panel {
+    width: calc(100% - 16px);
+    max-height: 94dvh;
+    border-radius: 14px;
+  }
+
+  .gl-video-player-panel .gl-lightbox-header {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .gl-video-player-panel .gl-lightbox-header h3 {
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .gl-video-player-panel .gl-lightbox-header button {
+    flex-shrink: 0;
+  }
+
+  .gl-video-player-panel .gl-player,
+  .gl-video-player-panel .gl-player video {
+    max-height: 34dvh;
+  }
+
+  .gl-video-player-panel .gl-lightbox-footer {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
+
+/* Very short screens */
+@media (max-height: 550px) {
+  .gl-lightbox-panel.gl-video-player-panel {
+    max-height: 96dvh;
+  }
+
+  .gl-video-player-panel .gl-player,
+  .gl-video-player-panel .gl-player video {
+    max-height: 30dvh;
+  }
+}
