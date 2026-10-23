@@ -941,3 +941,61 @@
     padding: 10px !important;
   }
 }
+
+
+/* Fix: keep video modal compact and responsive */
+.gl-lightbox-panel.gl-video-player-panel {
+  width: min(900px, calc(100vw - 32px));
+  max-width: calc(100vw - 32px);
+  max-height: 92vh;
+  max-height: 92svh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.gl-video-player-panel .gl-player {
+  width: 100%;
+  height: auto;
+  max-height: 65vh;
+  max-height: 65svh;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #05070c;
+}
+
+.gl-video-player-panel .gl-player video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 65vh;
+  max-height: 65svh;
+  object-fit: contain;
+  background: #05070c;
+}
+
+/* Mobile: smaller modal and video */
+@media (max-width: 600px) {
+  .gl-lightbox-panel.gl-video-player-panel {
+    width: calc(100vw - 20px);
+    max-width: calc(100vw - 20px);
+    max-height: 94vh;
+    max-height: 94svh;
+    margin: 10px auto;
+  }
+
+  .gl-video-player-panel .gl-player {
+    max-height: 52vh;
+    max-height: 52svh;
+  }
+
+  .gl-video-player-panel .gl-player video {
+    max-height: 52vh;
+    max-height: 52svh;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}
